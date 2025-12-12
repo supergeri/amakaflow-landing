@@ -80,33 +80,50 @@ export function Hero() {
 
           {/* Device Mockups */}
           <div className="relative hidden lg:block">
-            <div className="relative">
-              {/* Glow Effect */}
-              <div className="absolute inset-0 bg-yellow-400 blur-3xl opacity-20 rounded-full" />
-              
-              {/* Placeholder for device mockups - in production, replace with actual app screenshots */}
-              <div className="relative space-y-4">
-                <div className="bg-gradient-to-br from-slate-800 to-purple-900 rounded-3xl p-8 border border-white/10 shadow-2xl transform rotate-2 hover:rotate-0 transition-transform duration-300">
-                  <div className="aspect-video bg-slate-700/50 rounded-xl mb-4 flex items-center justify-center text-slate-400">
-                    <div className="text-center">
-                      <div className="text-4xl mb-2">💪</div>
-                      <div className="text-sm">Workout Structure Editor</div>
-                    </div>
+            {/* Glow Effect */}
+            <div className="absolute inset-0 bg-yellow-400 blur-3xl opacity-20 rounded-full" />
+
+            {/* Desktop Browser Mockup */}
+            <div className="relative z-10 mb-8">
+              <div className="bg-slate-800 rounded-xl shadow-2xl border border-white/10 overflow-hidden">
+                {/* Browser Chrome */}
+                <div className="bg-slate-700 px-4 py-2 flex items-center gap-2">
+                  <div className="flex gap-1.5">
+                    <div className="w-3 h-3 rounded-full bg-red-500" />
+                    <div className="w-3 h-3 rounded-full bg-yellow-500" />
+                    <div className="w-3 h-3 rounded-full bg-green-500" />
                   </div>
-                  <div className="space-y-2">
-                    <div className="h-3 bg-slate-600/50 rounded w-3/4" />
-                    <div className="h-3 bg-slate-600/50 rounded w-1/2" />
-                  </div>
-                </div>
-                
-                <div className="bg-gradient-to-br from-purple-900 to-pink-900 rounded-2xl p-6 border border-white/10 shadow-2xl transform -rotate-2 hover:rotate-0 transition-transform duration-300 -mt-8 ml-12">
-                  <div className="aspect-[9/16] bg-slate-700/50 rounded-xl flex items-center justify-center text-slate-400">
-                    <div className="text-center">
-                      <div className="text-4xl mb-2">📱</div>
-                      <div className="text-sm">iOS Companion App</div>
-                    </div>
+                  <div className="flex-1 bg-slate-600 rounded px-3 py-1 text-xs text-slate-400 ml-4">
+                    app.amakaflow.com
                   </div>
                 </div>
+                {/* Screenshot */}
+                <img
+                  src="/images/desktop/welcome.png"
+                  alt="AmakaFlow Web App - Welcome screen showing 4-step workflow"
+                  className="w-full"
+                />
+              </div>
+            </div>
+
+            {/* Phone Mockups - Below Desktop */}
+            <div className="flex items-center justify-center gap-0 relative z-20 -mt-8">
+              {/* iPhone 1 - Sources */}
+              <div className="transform -rotate-3 hover:rotate-0 transition-transform drop-shadow-2xl -mr-4">
+                <img
+                  src="/images/mobile/sources.png"
+                  alt="AmakaFlow iOS App - Sources and integrations"
+                  className="w-40 h-auto mix-blend-lighten"
+                />
+              </div>
+
+              {/* iPhone 2 - Workouts */}
+              <div className="transform rotate-3 hover:rotate-0 transition-transform drop-shadow-2xl">
+                <img
+                  src="/images/mobile/workouts.png"
+                  alt="AmakaFlow iOS App - Workouts list"
+                  className="w-40 h-auto mix-blend-lighten"
+                />
               </div>
             </div>
           </div>
