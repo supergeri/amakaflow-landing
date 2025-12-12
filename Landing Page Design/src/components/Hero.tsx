@@ -15,15 +15,8 @@ export function Hero() {
       {/* Background Pattern */}
       <div className="absolute inset-0 bg-grid-white/[0.05] bg-[size:20px_20px]" />
       
-      {/* Hero Image Background */}
-      <div className="absolute inset-0 opacity-20">
-        <img
-          src="figma:asset/2590045db80a0e04e01139deb0b7008bb4e04fad.png"
-          alt="Background"
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-purple-900/80 to-slate-900" />
-      </div>
+      {/* Gradient Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-purple-900/80 to-slate-900" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28 lg:py-36">
         <div className="grid lg:grid-cols-2 gap-12 items-center">

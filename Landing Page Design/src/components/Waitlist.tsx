@@ -1,17 +1,40 @@
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
-import { ArrowRight, CheckCircle2, Sparkles } from "lucide-react";
+import { ArrowRight, CheckCircle2, Sparkles, Loader2 } from "lucide-react";
 
 export function Waitlist() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // In production, this would send to your backend (Supabase + Resend)
-    console.log("Email signup:", email);
-    setSubmitted(true);
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await fetch("https://api.buttondown.email/v1/subscribers", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Token ${import.meta.env.VITE_BUTTONDOWN_API_KEY}`,
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.detail || "Something went wrong");
+      }
+
+      setSubmitted(true);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to subscribe");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -22,15 +45,8 @@ export function Waitlist() {
       {/* Background Pattern */}
       <div className="absolute inset-0 bg-grid-white/[0.05] bg-[size:20px_20px]" />
       
-      {/* Background Image (optional subtle overlay) */}
-      <div className="absolute inset-0 opacity-10">
-        <img
-          src="figma:asset/2590045db80a0e04e01139deb0b7008bb4e04fad.png"
-          alt="Background"
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/90 to-slate-900/90" />
-      </div>
+      {/* Gradient Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-900/90 to-slate-900/90" />
 
       <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         {!submitted ? (
@@ -57,15 +73,28 @@ export function Waitlist() {
                   required
                   className="flex-1 px-6 py-6 text-lg bg-white/10 border-white/20 text-white placeholder:text-purple-300"
                 />
-                <Button 
-                  type="submit" 
+                <Button
+                  type="submit"
                   size="lg"
-                  className="bg-yellow-400 text-slate-900 hover:bg-yellow-500 px-8 py-6 text-lg whitespace-nowrap"
+                  disabled={loading}
+                  className="bg-yellow-400 text-slate-900 hover:bg-yellow-500 px-8 py-6 text-lg whitespace-nowrap disabled:opacity-50"
                 >
-                  Get Notified
-                  <ArrowRight className="ml-2 size-5" />
+                  {loading ? (
+                    <>
+                      <Loader2 className="mr-2 size-5 animate-spin" />
+                      Signing up...
+                    </>
+                  ) : (
+                    <>
+                      Get Notified
+                      <ArrowRight className="ml-2 size-5" />
+                    </>
+                  )}
                 </Button>
               </div>
+              {error && (
+                <p className="mt-4 text-red-400 text-sm">{error}</p>
+              )}
             </form>
 
             <div className="flex flex-wrap justify-center gap-6 text-sm text-purple-200">
