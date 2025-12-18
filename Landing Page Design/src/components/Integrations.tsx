@@ -1,5 +1,4 @@
 import { MessageSquare, Instagram, Youtube, Camera, Watch, Smartphone, Calendar as CalendarIcon, Apple } from "lucide-react";
-import { ImageWithFallback } from "./figma/ImageWithFallback";
 
 export function Integrations() {
   const sources = [
@@ -15,13 +14,13 @@ export function Integrations() {
   ];
 
   return (
-    <section id="integrations" className="py-20 bg-gradient-to-br from-slate-900 to-purple-900 text-white">
+    <section id="integrations" className="py-20 bg-slate-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl sm:text-5xl mb-4">
             Works With Everything You Use
           </h2>
-          <p className="text-xl text-purple-200 max-w-3xl mx-auto">
+          <p className="text-xl text-slate-400 max-w-3xl mx-auto">
             Import from any source, export to any device
           </p>
         </div>
@@ -29,7 +28,7 @@ export function Integrations() {
         <div className="grid lg:grid-cols-3 gap-12 items-center mb-16">
           {/* Sources */}
           <div className="space-y-4">
-            <h3 className="text-2xl mb-6 text-center lg:text-right text-yellow-400">Import From</h3>
+            <h3 className="text-2xl mb-6 text-center lg:text-right text-orange-400">Import From</h3>
             {sources.map((source, index) => {
               const Icon = source.icon;
               return (
@@ -43,27 +42,23 @@ export function Integrations() {
             })}
           </div>
 
-          {/* Center - Phone Mockup */}
+          {/* Center - Logo */}
           <div className="flex flex-col items-center justify-center">
             <div className="relative">
-              <div className="absolute inset-0 bg-yellow-400 blur-3xl opacity-30 rounded-full" />
-              <div className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white/20 w-64">
-                <ImageWithFallback
-                  src="https://images.unsplash.com/photo-1762768767074-e491f1eebdfc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmaXRuZXNzJTIwYXBwJTIwcGhvbmV8ZW58MXx8fHwxNzYzMjYzMTM5fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-                  alt="TraininQ app interface"
-                  className="w-full h-96 object-cover"
-                />
+              <div className="absolute inset-0 bg-orange-500 blur-3xl opacity-20 rounded-full" />
+              <div className="relative bg-gradient-to-br from-orange-500 to-orange-600 rounded-3xl p-8 shadow-2xl">
+                <div className="text-4xl font-bold text-white">AF</div>
               </div>
             </div>
             <div className="mt-6 text-center">
-              <div className="text-2xl mb-2">AmakaFlow</div>
-              <div className="text-sm text-purple-300">Instant Conversion</div>
+              <div className="text-2xl font-bold mb-2">AmakaFlow</div>
+              <div className="text-sm text-slate-400">Instant Conversion</div>
             </div>
           </div>
 
           {/* Devices */}
           <div className="space-y-4">
-            <h3 className="text-2xl mb-6 text-center lg:text-left text-yellow-400">Export To</h3>
+            <h3 className="text-2xl mb-6 text-center lg:text-left text-orange-400">Export To</h3>
             {devices.map((device, index) => {
               const Icon = device.icon;
               return (
@@ -80,11 +75,11 @@ export function Integrations() {
 
         {/* Platform Badges Section */}
         <div className="space-y-8">
-          <h3 className="text-2xl text-center text-yellow-400 mb-8">Supported Platforms & Services</h3>
+          <h3 className="text-2xl text-center text-orange-400 mb-8">Supported Platforms & Services</h3>
           
           {/* Device Integration Row */}
           <div>
-            <h4 className="text-sm text-purple-300 text-center mb-4">Device Integration</h4>
+            <h4 className="text-sm text-slate-400 text-center mb-4">Device Integration</h4>
             <div className="flex flex-wrap justify-center items-center gap-4">
               <div className="flex items-center gap-2 px-4 py-3 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
                 <Watch className="size-5" />
@@ -94,16 +89,16 @@ export function Integrations() {
                 <Smartphone className="size-5" />
                 <span>Garmin</span>
               </div>
-              <div className="flex items-center gap-2 px-4 py-3 bg-yellow-400/20 backdrop-blur-sm rounded-full border border-yellow-400/30">
-                <Apple className="size-5 text-yellow-400" />
-                <span className="text-yellow-400">iOS App Store (Coming Soon)</span>
+              <div className="flex items-center gap-2 px-4 py-3 bg-orange-400/20 backdrop-blur-sm rounded-full border border-orange-400/30">
+                <Apple className="size-5 text-orange-400" />
+                <span className="text-orange-400">iOS App Store (Coming Soon)</span>
               </div>
             </div>
           </div>
 
           {/* Source Platforms Row */}
           <div>
-            <h4 className="text-sm text-purple-300 text-center mb-4">Import Sources</h4>
+            <h4 className="text-sm text-slate-400 text-center mb-4">Import Sources</h4>
             <div className="flex flex-wrap justify-center items-center gap-4">
               <div className="flex items-center gap-2 px-4 py-3 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
                 <Youtube className="size-5" />
@@ -128,7 +123,7 @@ export function Integrations() {
 
           {/* Calendar Integration Row */}
           <div>
-            <h4 className="text-sm text-purple-300 text-center mb-4">Calendar Sync</h4>
+            <h4 className="text-sm text-slate-400 text-center mb-4">Calendar Sync</h4>
             <div className="flex flex-wrap justify-center items-center gap-4">
               <div className="flex items-center gap-2 px-4 py-3 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
                 <Apple className="size-5" />

@@ -1,128 +1,141 @@
+import { useState } from "react";
 import { Button } from "./ui/button";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { Input } from "./ui/input";
+import { ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
 
 export function Hero() {
-  const scrollToSignup = () => {
-    document.getElementById('signup')?.scrollIntoView({ behavior: 'smooth' });
-  };
+  const [email, setEmail] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const scrollToHowItWorks = () => {
-    document.getElementById('how-it-works')?.scrollIntoView({ behavior: 'smooth' });
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await fetch("https://api.buttondown.email/v1/subscribers", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Token ${import.meta.env.VITE_BUTTONDOWN_API_KEY}`,
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.detail || "Something went wrong");
+      }
+
+      setSubmitted(true);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to subscribe");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 bg-grid-white/[0.05] bg-[size:20px_20px]" />
-      
-      {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-purple-900/80 to-slate-900" />
+    <section className="bg-slate-900 text-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28 lg:py-36">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <div className="text-center lg:text-left">
-            {/* Coming Soon Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-400/20 backdrop-blur-sm border border-yellow-400/30 mb-8">
-              <Sparkles className="size-4 text-yellow-400" />
-              <span className="text-sm text-yellow-400">Coming Soon</span>
-            </div>
-            
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl mb-6 bg-gradient-to-r from-white to-purple-200 bg-clip-text text-transparent">
-              AmakaFlow
+          {/* Left side - Content */}
+          <div className="text-center lg:text-left order-2 lg:order-1">
+            {/* Logo */}
+            <div className="text-3xl font-bold text-orange-400 mb-6">AmakaFlow</div>
+
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 leading-tight">
+              Turn any workout into{" "}
+              <span className="text-orange-400">watch-ready training</span>
             </h1>
-            
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl mb-6 text-yellow-400">
-              Turn Any Workout Into Watch-Ready Training
-            </h2>
-            
-            <p className="text-xl sm:text-2xl text-purple-100 mb-10 max-w-3xl mx-auto lg:mx-0">
-              AmakaFlow converts workouts from YouTube, Instagram, TikTok, or ChatGPT into structured training — then syncs them directly to your Garmin or Apple Watch. No more manual entry.
+
+            <p className="text-lg sm:text-xl text-slate-400 mb-8 max-w-lg mx-auto lg:mx-0">
+              Import from YouTube, Instagram, or TikTok. AI structures it. Sync to Apple Watch or Garmin. Done.
             </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start items-center">
-              <Button 
-                size="lg" 
-                onClick={scrollToSignup}
-                className="bg-yellow-400 text-slate-900 hover:bg-yellow-500 px-8 py-6 text-lg"
-              >
-                Get Notified
-                <ArrowRight className="ml-2 size-5" />
-              </Button>
-              <Button 
-                size="lg" 
-                variant="outline" 
-                onClick={scrollToHowItWorks}
-                className="border-white/30 text-white hover:bg-white/10 px-8 py-6 text-lg"
-              >
-                See How It Works
-              </Button>
-            </div>
-            
-            <div className="mt-16 flex flex-wrap justify-center lg:justify-start items-center gap-8 text-purple-200">
-              <div className="flex items-center gap-2">
-                <svg className="size-5" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                </svg>
-                <span>Apple Watch</span>
+
+            {/* Waitlist Form */}
+            {!submitted ? (
+              <div className="max-w-md mx-auto lg:mx-0">
+                <form onSubmit={handleSubmit} className="flex gap-3">
+                  <Input
+                    type="email"
+                    placeholder="Enter your email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    className="flex-1 px-4 py-3 bg-slate-800 border-slate-700 text-white placeholder:text-slate-500 rounded-lg"
+                  />
+                  <Button
+                    type="submit"
+                    disabled={loading}
+                    className="bg-orange-500 text-white hover:bg-orange-600 px-6 py-3 rounded-lg whitespace-nowrap"
+                  >
+                    {loading ? (
+                      <Loader2 className="size-5 animate-spin" />
+                    ) : (
+                      <>
+                        Join Waitlist
+                        <ArrowRight className="ml-2 size-4" />
+                      </>
+                    )}
+                  </Button>
+                </form>
+                {error && (
+                  <p className="mt-2 text-red-400 text-sm">{error}</p>
+                )}
+                <p className="mt-3 text-slate-500 text-sm">
+                  Join 100+ athletes waiting for early access
+                </p>
               </div>
-              <div className="flex items-center gap-2">
-                <svg className="size-5" viewBox="0 0 24 24" fill="currentColor">
-                  <circle cx="12" cy="12" r="10"/>
-                </svg>
-                <span>Garmin</span>
+            ) : (
+              <div className="max-w-md mx-auto lg:mx-0 flex items-center gap-3 text-green-400">
+                <CheckCircle2 className="size-6" />
+                <span className="text-lg">You're on the list! We'll be in touch.</span>
               </div>
-              <div className="flex items-center gap-2">
-                <span className="text-2xl">⚡</span>
-                <span>Instant Sync</span>
+            )}
+
+            {/* Platform badges */}
+            <div className="mt-10 flex flex-wrap justify-center lg:justify-start gap-3">
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-800 rounded-full text-sm text-slate-400">
+                <div className="w-2 h-2 rounded-full bg-green-500" />
+                Apple Watch
+              </div>
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-800 rounded-full text-sm text-slate-400">
+                <div className="w-2 h-2 rounded-full bg-green-500" />
+                Garmin
+              </div>
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-800 rounded-full text-sm text-slate-400">
+                <div className="w-2 h-2 rounded-full bg-green-500" />
+                iOS App
               </div>
             </div>
           </div>
 
-          {/* Device Mockups */}
-          <div className="relative hidden lg:block">
+          {/* Right side - Device Mockups */}
+          <div className="relative order-1 lg:order-2">
             {/* Glow Effect */}
-            <div className="absolute inset-0 bg-yellow-400 blur-3xl opacity-20 rounded-full" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-orange-500/20 blur-3xl rounded-full" />
 
-            {/* Desktop Browser Mockup */}
-            <div className="relative z-10 mb-8">
-              <div className="bg-slate-800 rounded-xl shadow-2xl border border-white/10 overflow-hidden">
-                {/* Browser Chrome */}
-                <div className="bg-slate-700 px-4 py-2 flex items-center gap-2">
-                  <div className="flex gap-1.5">
-                    <div className="w-3 h-3 rounded-full bg-red-500" />
-                    <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                    <div className="w-3 h-3 rounded-full bg-green-500" />
-                  </div>
-                  <div className="flex-1 bg-slate-600 rounded px-3 py-1 text-xs text-slate-400 ml-4">
-                    app.amakaflow.com
-                  </div>
-                </div>
-                {/* Screenshot */}
+            {/* Devices Container */}
+            <div className="relative z-10 flex items-end justify-center">
+              {/* Laptop Mockup */}
+              <div className="relative flex-shrink-0" style={{ width: '90%' }}>
                 <img
-                  src="/images/desktop/welcome.png"
-                  alt="AmakaFlow Web App - Welcome screen showing 4-step workflow"
-                  className="w-full"
-                />
-              </div>
-            </div>
-
-            {/* Phone Mockups - Below Desktop */}
-            <div className="flex items-center justify-center gap-0 relative z-20 -mt-8">
-              {/* iPhone 1 - Sources */}
-              <div className="transform -rotate-3 hover:rotate-0 transition-transform drop-shadow-2xl -mr-4">
-                <img
-                  src="/images/mobile/sources.png"
-                  alt="AmakaFlow iOS App - Sources and integrations"
-                  className="w-40 h-auto mix-blend-lighten"
+                  src="/images/desktop/amakaflowmainpage-front.png"
+                  alt="AmakaFlow Web App on laptop"
+                  className="w-full drop-shadow-2xl"
                 />
               </div>
 
-              {/* iPhone 2 - Workouts */}
-              <div className="transform rotate-3 hover:rotate-0 transition-transform drop-shadow-2xl">
+              {/* Phone Mockup - Standing beside laptop */}
+              <div className="relative flex-shrink-0 -ml-12 mb-4" style={{ width: '30%' }}>
                 <img
-                  src="/images/mobile/workouts.png"
-                  alt="AmakaFlow iOS App - Workouts list"
-                  className="w-40 h-auto mix-blend-lighten"
+                  src="/images/mobile/iphonedash-portrait.png"
+                  alt="AmakaFlow iOS App"
+                  className="w-full drop-shadow-2xl"
                 />
               </div>
             </div>

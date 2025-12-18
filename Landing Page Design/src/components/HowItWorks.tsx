@@ -6,19 +6,19 @@ export function HowItWorks() {
       icon: Upload,
       title: "Import Your Workout",
       description: "Paste a ChatGPT workout, share from Instagram/YouTube, or upload a screenshot. We support any format.",
-      color: "from-blue-500 to-cyan-500"
+      color: "from-orange-400 to-orange-500"
     },
     {
       icon: Wand2,
       title: "AI Structures It",
       description: "Our AI instantly parses intervals, paces, heart rate zones, and rest periods into a structured format.",
-      color: "from-purple-500 to-pink-500"
+      color: "from-orange-500 to-orange-600"
     },
     {
       icon: Watch,
       title: "Sync to Your Watch",
       description: "One tap to send directly to Apple Watch or Garmin. Start training in seconds, not minutes.",
-      color: "from-yellow-500 to-orange-500"
+      color: "from-orange-600 to-amber-600"
     }
   ];
 
@@ -36,7 +36,7 @@ export function HowItWorks() {
 
         <div className="grid md:grid-cols-3 gap-8 relative">
           {/* Connection lines for desktop */}
-          <div className="hidden md:block absolute top-20 left-1/4 right-1/4 h-0.5 bg-gradient-to-r from-cyan-500 via-purple-500 to-orange-500" />
+          <div className="hidden md:block absolute top-20 left-1/4 right-1/4 h-0.5 bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600" />
           
           {steps.map((step, index) => {
             const Icon = step.icon;
