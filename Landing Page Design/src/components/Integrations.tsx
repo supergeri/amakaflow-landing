@@ -25,25 +25,27 @@ export function Integrations() {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-12 items-center mb-16">
+        <div className="grid lg:grid-cols-3 gap-8 lg:gap-12 items-start mb-16">
           {/* Sources */}
-          <div className="space-y-4">
-            <h3 className="text-2xl mb-6 text-center lg:text-right text-orange-400">Import From</h3>
-            {sources.map((source, index) => {
-              const Icon = source.icon;
-              return (
-                <div key={index} className="flex items-center gap-4 lg:flex-row-reverse lg:justify-end">
-                  <div className={`p-4 rounded-xl ${source.color}`}>
-                    <Icon className="size-6" />
+          <div className="flex flex-col items-center lg:items-end">
+            <h3 className="text-2xl mb-6 text-orange-400">Import From</h3>
+            <div className="space-y-4">
+              {sources.map((source, index) => {
+                const Icon = source.icon;
+                return (
+                  <div key={index} className="flex items-center gap-4 flex-row-reverse">
+                    <div className={`p-4 rounded-xl ${source.color}`}>
+                      <Icon className="size-6" />
+                    </div>
+                    <span className="text-lg text-right">{source.name}</span>
                   </div>
-                  <span className="text-lg">{source.name}</span>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
 
           {/* Center - Logo */}
-          <div className="flex flex-col items-center justify-center">
+          <div className="flex flex-col items-center justify-center py-4">
             <div className="relative">
               <div className="absolute inset-0 bg-orange-500 blur-3xl opacity-20 rounded-full" />
               <div className="relative bg-gradient-to-br from-orange-500 to-orange-600 rounded-3xl p-8 shadow-2xl">
@@ -57,19 +59,21 @@ export function Integrations() {
           </div>
 
           {/* Devices */}
-          <div className="space-y-4">
-            <h3 className="text-2xl mb-6 text-center lg:text-left text-orange-400">Export To</h3>
-            {devices.map((device, index) => {
-              const Icon = device.icon;
-              return (
-                <div key={index} className="flex items-center gap-4">
-                  <div className={`p-4 rounded-xl ${device.color}`}>
-                    <Icon className="size-6" />
+          <div className="flex flex-col items-center lg:items-start">
+            <h3 className="text-2xl mb-6 text-orange-400">Export To</h3>
+            <div className="space-y-4">
+              {devices.map((device, index) => {
+                const Icon = device.icon;
+                return (
+                  <div key={index} className="flex items-center gap-4">
+                    <div className={`p-4 rounded-xl ${device.color}`}>
+                      <Icon className="size-6" />
+                    </div>
+                    <span className="text-lg">{device.name}</span>
                   </div>
-                  <span className="text-lg">{device.name}</span>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
 
@@ -89,9 +93,13 @@ export function Integrations() {
                 <Smartphone className="size-5" />
                 <span>Garmin</span>
               </div>
-              <div className="flex items-center gap-2 px-4 py-3 bg-orange-400/20 backdrop-blur-sm rounded-full border border-orange-400/30">
-                <Apple className="size-5 text-orange-400" />
-                <span className="text-orange-400">iOS App Store (Coming Soon)</span>
+              <div className="flex items-center gap-3 px-4 py-3 bg-orange-400/20 backdrop-blur-sm rounded-full border border-orange-400/30">
+                <img
+                  src="/images/mobile/iphonedash-portrait.png"
+                  alt="iOS App"
+                  style={{ height: '400px', width: 'auto' }}
+                />
+                <span className="text-orange-400">iOS App (Coming Soon)</span>
               </div>
             </div>
           </div>
